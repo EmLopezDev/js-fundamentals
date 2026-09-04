@@ -1,3 +1,6 @@
+// The push method mutate the original array adding an element or elements to the end of the array
+// and returns the new length of the array
+
 // This is if an older browser doesn't natively have the push method
 if (!Array.prototype.push) {
     Array.prototype.push = function (...elements) {

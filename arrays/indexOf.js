@@ -1,3 +1,6 @@
+// The indexOf method searches an array to verify whether it contains an element, if it does it
+// returns the index of that element if not it returns -1
+
 // This is if an older browser doesn't natively have the indexOf method
 if (!Array.prototype.indexOf) {
     Array.prototype.indexOf = function (element) {

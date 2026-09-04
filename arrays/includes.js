@@ -1,3 +1,6 @@
+// The includes method searches an array to verify whether or not it contains a certain element
+// return true if it does and false if it doesn't
+
 // This is if an older browser doesn't natively have the includes method
 if (!Array.prototype.includes) {
     Array.prototype.includes = function (element) {
