@@ -1,7 +1,6 @@
 /* Lexical scope simply means that where you write your code determines what variables your
-functions can see. */
+functions can see.
 
-/*
 When your code attempts to access a variable, the JavaScript engine performs a search in a sequence
 called the Scope Chain:
 
