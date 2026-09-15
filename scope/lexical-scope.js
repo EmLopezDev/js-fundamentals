@@ -25,15 +25,15 @@ function outerFunction() {
         const innerVariable = "I am local to inner";
 
         // Accessing variables via the lexical scope chain
-        console.log(innerVariable); // ✅ Works: Found in local scope (local memory)
-        console.log(outerVariable); // ✅ Works: Found in parent scope (outer lexical parent)
-        console.log(globalVariable); // ✅ Works: Found in global scope
+        console.log(innerVariable); // Works: Found in local scope (local memory)
+        console.log(outerVariable); // Works: Found in parent scope (outer lexical parent)
+        console.log(globalVariable); // Works: Found in global scope
     }
 
     innerFunction();
 
     // Trying to look inward
-    console.log(innerVariable); // ❌ ReferenceError: innerVariable is not defined here
+    console.log(innerVariable); // ReferenceError: innerVariable is not defined here
 }
 
 outerFunction();
