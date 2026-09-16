@@ -175,3 +175,77 @@ const apiService = {
         return response.json();
     },
 };
+
+/*
+6. Generator Functions
+
+A generator function in JavaScript is a special type of function that can pause its execution and
+resume later, rather than running from start to finish all at once. When invoked, it does not
+immediately run the code inside; instead, it returns a unique Generator object that controls the
+execution flow.
+
+Key Concepts: Syntax & Keywords
+- function*: Declares a generator function (notice the asterisk).
+- yield: Pauses the function and returns a value to the caller.
+- .next(): Resumes the function from where it was last paused until it hits the next yield.
+
+Whenever you call .next(), it returns an object with two properties:
+
+- value: The data sent out by the yield statement.
+- done: A boolean (true or false) indicating if the function has finished running.
+
+Best used for :
+- Handling massive data streams
+- Custom iterators
+- Custom data structures
+- Complex state machines
+- Multi step workflows
+
+Don't use when:
+- Simple synchronous data processing
+- Standard async flow controls
+- Random access items since values can only be read sequentially
+
+The `this` context for generators is dynamic like all other function types, it just depends on how
+they are authored. The exception is arrow functions because generators cannot be created using
+arrow function syntax.
+*/
+
+// 1. Define the generator function
+function* countToThree() {
+    console.log("Starting...");
+    yield 1; // Pauses here on the 1st next()
+    yield 2; // Pauses here on the 2nd next()
+    yield 3; // Pauses here on the 3rd next()
+    console.log("Finished!");
+}
+
+// 2. Initialize the generator (does not run code yet)
+const counter1 = countToThree();
+
+// 3. Step through the execution
+console.log(counter1.next()); // Logs: "Starting..." then { value: 1, done: false }
+console.log(counter1.next()); // Logs: { value: 2, done: false }
+console.log(counter1.next()); // Logs: { value: 3, done: false }
+console.log(counter1.next()); // Logs: "Finished!" then { value: undefined, done: true }
+
+// `this`
+const serviceRunner = {
+    status: "active",
+
+    // Method shorthand binds 'this' to serviceRunner
+    *statusMonitor() {
+        while (true) {
+            yield `Current system state is: ${this.status}`;
+        }
+    },
+};
+
+const monitor = serviceRunner.statusMonitor();
+console.log(monitor.next().value); // "Current system state is: active"
+
+function* yieldHello() {
+    // points to the global object or undefined if in strict mode
+    console.log(this);
+    yield console.log("hello");
+}
