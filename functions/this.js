@@ -27,8 +27,17 @@ If a function uses .call(), .apply(), or .bind(), `this` is explicitly defined b
 are forcing JavaScript to use a specific object as `this`.
 
 - call and apply: Invoke the function immediately with the provided context.
+    - .call passes arguments individually
+        obj.call(user, "New York", "Engineer");
+
+    - .apply passes arguments in an array
+        obj.apply(user, ["New York", "Engineer"]);
+        obj.apply(user, ...array);
+
 - bind: Returns a brand-new function with `this` permanently locked to the specified object,
 regardless of how it is called later.
+    - bind also allows you to pre-set arguments for a function ahead of time. This creates a new
+    function that expects only the remaining parameters.
 */
 
 function greet() {
@@ -39,6 +48,28 @@ const person = { name: "Bob" };
 
 // Force `this` to be `person`
 greet.call(person); // "Hello, my name is Bob"
+
+// pre-set binding example
+function multiply(a, b) {
+    return a * b;
+}
+
+// Pre-sets 'a' as 2, creating a permanent doubling function
+const double = multiply.bind(null, 2);
+
+console.log(double(5)); // 10 (2 * 5)
+console.log(double(12)); // 24 (2 * 12)
+
+// If you pass null or undefined as the first argument to .call(), .apply(), or .bind(), JavaScript
+// ignores that value and applies the Default Binding rule.
+
+function checkThis() {
+    console.log(this);
+}
+
+// Non-strict mode: logs Window / Global
+// Strict mode: logs null
+checkThis.call(null);
 
 /*
 3. Implicit Binding
