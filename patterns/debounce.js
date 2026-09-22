@@ -126,3 +126,70 @@ What's the basic difference between debounce and throttle?
 Debounce waits until calls stop. Throttle limits how frequently a function can run while calls
 continue.
 */
+
+/*
+Basic implementation to memorize but also understand what is happening for interview prep
+*/
+
+async function searchUsers(query) {
+    const response = await fetch(`/api/users?search=${query}`);
+
+    const users = await response.json();
+
+    console.log(users);
+}
+
+const input = document.querySelector("#search");
+
+input.addEventListener("input", (event) => {
+    searchUsers(event.target.value);
+});
+
+/*
+j          → searchUsers("j")
+ja         → searchUsers("ja")
+jav        → searchUsers("jav")
+java       → searchUsers("java")
+javas      → searchUsers("javas")
+javasc     → searchUsers("javasc")
+...
+javascript → searchUsers("javascript")
+
+searchUsers() is ran with every keystroke making an API call every time which can cause performance
+issues
+*/
+
+function debounce(fn, delay) {
+    let timer;
+
+    return function (...args) {
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            fn(...args);
+        }, delay);
+    };
+}
+
+const debouncedSearchUser = debounce(searchUsers, 500);
+
+input.addEventListener("input", (event) => {
+    debouncedSearchUser(event.target.value);
+});
+
+/*
+"j"    → wait...
+"ja"   → reset
+"jav"  → reset
+"java" → reset
+          ↓
+       user stops
+          ↓
+        500ms
+          ↓
+     API request
+          ↓
+ searchUsers("java")
+
+ The call is only made once after the user stops inputting values
+*/

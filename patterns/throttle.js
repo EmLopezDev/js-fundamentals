@@ -160,5 +160,59 @@ What's the difference between throttle and debounce?
 
 - Debounce waits until repeated calls stop. Throttle allows execution during repeated calls but
   limits how often it happens.
+*/
 
+/*
+Basic implementation to memorize but also understand what is happening for interview prep
+*/
+
+function handleScroll() {
+    console.log("Scroll position:", window.scrollY);
+}
+
+window.addEventListener("scroll", handleScroll);
+// this will run on every scroll, which can be an optimization issue.
+// scroll => handleScroll()
+// scroll => handleScroll()
+// scroll => handleScroll()
+// scroll => handleScroll()
+// scroll => handleScroll()
+// scroll => handleScroll()
+
+function throttle(fn, delay) {
+    let canRun = true;
+
+    return function (...args) {
+        if (!canRun) return;
+
+        fn(...args);
+        canRun = false;
+
+        setTimeout(() => {
+            canRun = true;
+        }, delay);
+    };
+}
+
+const throttleScroll = throttle(handleScroll, 500);
+
+window.addEventListener("scroll", throttleScroll);
+
+// scroll => handleScroll()
+// scroll => canRun = false
+// scroll => canRun = false
+// scroll => canRun = false
+// scroll => canRun = false
+// scroll => handleScroll()
+// scroll => canRun = false
+// scroll => canRun = false
+// scroll => canRun = false
+// scroll => canRun = false
+// scroll => handleScroll()
+
+/*
+"A common use case for throttling is a scroll handler. Scroll events can fire many times while the
+user is scrolling. If the handler performs expensive work, running it for every event can be
+unnecessary. I can throttle the handler so it still runs periodically while the user scrolls, but
+not on every event."
 */
