@@ -45,3 +45,22 @@ BackPack
 |                                                      |
 --------------------------------------------------------
 */
+
+/*
+Basic implementation to memorize but also understand what is happening for interview prep
+*/
+
+function createCounter() {
+    let count = 0;
+
+    return function () {
+        count++;
+        return count;
+    };
+}
+
+const counter = createCounter(); // creates a closure around count with the value of 0
+
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
