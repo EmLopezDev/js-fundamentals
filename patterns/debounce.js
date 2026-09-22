@@ -7,6 +7,12 @@ Think of it like an elevator door: the door wants to close, but every time a new
 event triggers), the closing timer resets. The door will only close once there is a brief pause with
 no new people.
 
+Not to be confused with throttling which is similar but instead of firing off an action once per
+fixed interval, instead it waits for a delay in activity or a pause before firing off the action.
+
+- Debounce: "Wait until you're done"
+- Throttling: "You can keep going, but I'll only respond every so often."
+
 Common Use Cases
 
 - Search Auto-complete: Waiting for a user to pause their typing before making an API request,
