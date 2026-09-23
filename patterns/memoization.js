@@ -22,10 +22,10 @@ function memoize(fn) {
     return function (arg) {
         // if the incoming arg is stored in the cache as a key its value is returned from the cache
         if (arg in cache) {
-            // and returned by the inner function
+            // and returned
             return cache[arg];
         }
-        // if not the function is ran using the arg
+        // if not the passed function is ran using the arg
         const result = fn(arg);
         // we then store the result in the cache using the arg as the key
         cache[arg] = result;
