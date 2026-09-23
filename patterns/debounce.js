@@ -193,3 +193,26 @@ input.addEventListener("input", (event) => {
 
  The call is only made once after the user stops inputting values
 */
+
+// This version preserves the this context, use this version best for when used as an object method,
+// React class components, or events handlers.
+function debounce(func, wait) {
+    let timerId;
+    return function (...args) {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+            func.apply(this, args);
+            // func.call(this, ...args) works too
+        }, wait);
+    };
+}
+
+const record = debounce(function (label) {
+    values.push(`${this.id}:${label}`);
+}, 50);
+
+const first = { id: "first", record };
+const second = { id: "second", record };
+
+/*  Since record is being used withing an object as a method, using the `this` keyword will preserve
+ its context to be that of the object it is in. */
