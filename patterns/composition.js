@@ -115,7 +115,10 @@ Does composition use closures?
 
 Are composition and currying the same?
 
-- No. Currying changes how arguments are supplied. Composition connects functions together.
+- No. Currying changes how arguments are supplied (one at a time) to a function. Composition
+  connects functions together. "Currying changes how arguments are supplied to a function, typically
+  supplying them in stages. Function composition connects functions so the output of one becomes the
+  input of the next."
 
 What makes functions easy to compose?
 
