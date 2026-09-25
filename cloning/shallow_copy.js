@@ -99,7 +99,7 @@ const updatedNumbers3 = [4, 5, 6, ...numbers]; // [4, 5, 6, 1, 2, 3]
 /*
 One call out which is more common in React, but can be seen in vanilla JS;
 
-Updating nested state or objects with spread
+Updating nested state or objects with spread.
 */
 
 const [currentUser, setCurrentUser] = useState({
@@ -117,7 +117,8 @@ deciding whether a state update represents a changed value. If you mutate the ex
 pass that same object back, React may bail out because the reference hasn't changed.
 */
 
-// Wrong way
+// The value will be updated however this is the wrong way in react. For vanilla JS this will work
+// since we have more control over updating the UI with DOM manipulating methods
 currentUser.address.city = "Boston";
 
 /*
