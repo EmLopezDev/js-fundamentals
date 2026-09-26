@@ -133,7 +133,7 @@ end result
 }
 */
 
-// Correct way
+// Correct way in React since state needs to view it as a new object
 setCurrentUser({
     ...currentUser,
 
@@ -160,4 +160,17 @@ In the correct way, we are updating nested state using the spread operator. We a
 creating a new currentUser object with the currentUser data and updating the address value with a
 new object as well. This will cause react to update the state value wherever it is used because it
 sees a new object being referenced.
+
+Easiest way to remember for an interview
+
+Shallow copy: Copy only the levels necessary for the change. Most common for normal updates and
+React state.
+
+Deep copy: Copy the entire nested structure when the new data must be fully independent of the
+original.
+
+Memory trick:
+
+- Shallow = copy what changed.
+- Deep = separate everything.
 */
