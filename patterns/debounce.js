@@ -32,15 +32,21 @@ ID (timeoutId).
 // fn: function we want to eventually run
 // delay: how long we should wait before running fn
 function debounce(fn, delay) {
-    // timerId: id of currently running timer.
-    let timerId;
-    // returns a function that created a closure around fn, delay, and timerId
+    /* timer: id of currently running timer. It is declared on the outer function because we need
+    the same timer variable across multiple calls, this is possible thanks to closures. If we either
+    set it as a parameter or place it in the inner returned function every invocation of either the
+    outer or inner function would create a new timer, hence losing access to the previous timer and
+    defeating the ability to cancel previous calls.
+     */
+    let timer;
+    // returns a function that created a closure around fn, delay, and timer. ...args captures the
+    // arguments of the fn being passed
     return function (...args) {
-        // whenever this return function is ran, it clears the previous timerId to essential cancel
+        // whenever this return function is ran, it clears the previous timer to essential cancel
         // the previously awaiting action
-        clearTimeout(timerId);
-        // it created a new count down timerId for the new action that will wait to execute.
-        timerId = setTimeout(() => {
+        clearTimeout(timer);
+        // here we create a new count down timerId for the new action that will wait to execute.
+        timer = setTimeout(() => {
             // each time this inner function is called a new args array is created and setTimeout
             // creates it's own closure around ...args
             fn(...args);
