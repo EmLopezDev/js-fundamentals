@@ -84,9 +84,21 @@ function memoize(fn) {
     const cache = new Map();
 
     return function (...args) {
-        /* since ...args is now an array we must store the array as a key in the cache by
-        converting it into a string*/
+        /* ...args creates a new array on every function call. Since arrays are compared by
+        reference, using args directly as a Map key would cause identical arguments to be treated as
+        different keys.
+
+        For a simple implementation, use JSON.stringify(args) to convert the arguments into a
+        consistent string key.*/
         const key = JSON.stringify(args);
+        /*
+        JSON.stringify() is not a universal cache-key solution, the reason why is because it can
+        omit undefined values. In production, the strategy should depend on the inputs. Primitive
+        values can be used directly, objects can be keyed by reference with Map/WeakMap, and more
+        complex cases may use nested caches or a custom key function.
+
+        Objects/arrays → identity matters. Strings/primitives → value matters.
+        */
 
         if (cache.has(key)) {
             return cache.get(key);
