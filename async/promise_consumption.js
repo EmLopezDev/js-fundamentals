@@ -32,9 +32,10 @@ async function getStatus() {
         const message = await checkServerStatus; // Pauses here until promise resolves
         console.log("Success: " + message);
     } catch (error) {
-        console.error("Error: " + error);
+        console.error("Error: " + error); // handles any rejection
     } finally {
         console.log("Operation complete.");
+        // run an action once settled regardless of fulfillment or rejection
     }
 }
 
