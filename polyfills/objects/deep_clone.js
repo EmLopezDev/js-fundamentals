@@ -1,4 +1,12 @@
-// Implementing your own deepClone, this can be handled using recursion
+/* Implementing your own deepClone, this can be handled using recursion
+
+Note:
+
+“This is a simplified deep clone for primitives, arrays, and plain objects. A production
+implementation would need to define behavior for things like prototypes, circular references,
+built-in object types, property descriptors, and functions. For that you should stick to using
+structuredClone() or Lodash's cloneDeep()”
+*/
 function deepClone(value) {
     // Base case
     if (value === null || typeof value !== "object") {
