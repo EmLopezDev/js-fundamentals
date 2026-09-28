@@ -5,7 +5,7 @@ Note:
 “This is a simplified deep clone for primitives, arrays, and plain objects. A production
 implementation would need to define behavior for things like prototypes, circular references,
 built-in object types, property descriptors, and functions. For that you should stick to using
-structuredClone() or Lodash's cloneDeep()”
+structuredClone() or Lodash's cloneDeep(), but ultimately it depends on data”
 */
 function deepClone(value) {
     // Base case
