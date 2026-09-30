@@ -213,3 +213,29 @@ Note: for animation it is alway best to use properties like `transform` and `opa
 browser to avoid expensive layout and paint work on each frame. However, this is an optimization
 rather than a guarantee that every earlier rendering stage is always skipped.
 */
+
+/*
+Frame Budget & Dropped Frames: At 60 Hz, the browser has about 16.7ms between screen refreshes to
+prepare the next frame. If JavaScript or rendering work takes too long, the browser can miss a
+frame, causing animations or interactions to look choppy or janky.
+
+1000ms / 60 Hz  → ~16.7ms between refreshes
+1000ms / 120 Hz → ~8.3ms
+1000ms / 144 Hz → ~6.9ms
+*/
+
+/*
+Forced Synchronous Layout / Layout Thrashing
+
+happens when JavaScript changes the DOM and then immediately reads layout information, potentially
+forcing the browser to calculate layout before it normally would. Repeatedly mixing DOM writes and
+layout reads can cause “layout thrashing,” which hurts performance.
+*/
+
+for (const box of boxes) {
+    box.style.width = "500px"; // WRITE
+    console.log(box.offsetWidth); // READ → may force layout
+
+    box.style.width = "600px"; // WRITE
+    console.log(box.offsetWidth); // READ → may force layout again
+}

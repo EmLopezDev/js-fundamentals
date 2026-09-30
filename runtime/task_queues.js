@@ -59,3 +59,11 @@ console.log("5. End (Sync)");
 4. Explicit Microtask
 2. Timeout (Task Queue)
 */
+
+/*
+Microtask Starvation
+
+Microtask starvation happens when microtasks continuously create more microtasks, preventing the
+microtask queue from becoming empty. Since the browser drains microtasks before rendering or moving
+to the next task, this can delay rendering and other work.
+*/
