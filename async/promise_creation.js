@@ -53,3 +53,41 @@ anywhere in the active call stack, it throws a global environment error. Product
 global listeners (process.on('unhandledRejection') in Node.js or
 window.addEventListener('unhandledrejection') in browsers) to log these gracefully.
 */
+
+const controller = new AbortController();
+
+fetch("/api/search", {
+    // connects the async operation to the controller, this is how controller knows what to abort
+    signal: controller.signal,
+})
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.log("ERROR", error.name));
+
+controller.abort();
+/* causes the promise returned to reject with an aborted related rejection: `AbortError`. Because
+cancellation is intentional, apps often distinguish it from genuine failures rather than displaying
+an error to the user */
+
+try {
+    const response = await fetch(url, {
+        signal: controller.signal,
+    });
+    console.log(response);
+} catch (error) {
+    if (error.name === "AbortError") {
+        // Request intentionally canceled
+        return;
+    }
+
+    // Handle actual failure
+    console.error(error);
+}
+
+/*
+AbortController provides a signal that can be passed to an abortable operation such as fetch().
+Calling abort() signals cancellation, causing the associated fetch Promise to reject.
+
+NOTE: aborting fetch() doesn't guarantee that a server has stopped work it already received and
+started. Client cancellation and server-side cancellation are separate concerns.
+*/

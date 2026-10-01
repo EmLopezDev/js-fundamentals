@@ -1,7 +1,6 @@
-// ASYNC/AWAIT — WHAT HAPPENS BEHIND THE SCENES
+// ASYNC/AWAIT
 
-// Example:
-
+// Example
 async function getData() {
     console.log("A");
 
@@ -168,4 +167,28 @@ async call → Promise returned → await suspends function →
 Promise stays pending → function resumes via microtask →
 function returns value → Promise fulfills →
 .then reaction becomes microtask → .then callback runs
+*/
+
+// Forgotten await
+async function getUser() {
+    return { name: "John" };
+}
+
+async function displayUser() {
+    const user = getUser();
+
+    console.log(user.name);
+}
+
+displayUser();
+
+/*
+Because getUser() is an async function, calling it always returns a Promise. Without await, `user`
+contains the Promise itself, not the eventual `{ name: "John" }` value, so `user.name` is undefined.
+
+Using `const user = await getUser()` waits for the Promise to fulfill and gives `user` the
+fulfillment value `{ name: "John" }`, allowing `user.name` to return `"John"`.
+
+Important: Even if the Promise is already fulfilled, `user` is still the Promise object unless you
+use `await` (or `.then()`) to access its fulfillment value.
 */
