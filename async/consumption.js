@@ -7,6 +7,10 @@ success value or the failure reason.
 - .catch(): Runs if the promise is rejected.
 - .finally(): Runs after the promise is settled, regardless of whether it succeeded or failed (great
   for cleanup tasks like stopping a loading spinner).
+
+  If a Promise is rejected and there is no rejection handler, the rejection propagates down the
+  chain until something handles it; if nothing handles it, it becomes an unhandled Promise
+  rejection.
 */
 
 checkServerStatus
