@@ -157,3 +157,11 @@ controller.abort()
 request
 → fetch's Promise rejects because the operation was aborted
 */
+
+/*
+If you are debouncing a function why would you also need an AbortController?
+
+Debouncing reduces how many requests are started by waiting until the user pauses. But once a
+request has already started, debounce can't cancel it. AbortController can cancel that stale
+in-flight request when a newer search begins, so the two techniques complement each other.
+*/
