@@ -274,3 +274,208 @@ p25 → REJECTED
 p26 → FULFILLED
       value: 100
 */
+
+/*
+-- onFulfilled & onRejection --
+
+.then() can actually accept two callbacks .then(onFulfilled, onRejected)
+
+Think:
+
+promise settles
+     │
+     ├── FULFILLED ──→ onFulfilled(value)
+     │
+     └── REJECTED ───→ onRejected(reason)
+*/
+
+const p27 = Promise.reject(new Error("Failed"));
+
+const p28 = p27.then(
+    (value) => {
+        console.log("Success:", value);
+    },
+    (error) => {
+        console.log("Error:", error.message);
+    },
+);
+
+/*
+since p27 was rejected the first callback doesn't run but the second one does handling the rejection
+
+.catch() conceptually is just .then(undefined, onRejection)
+*/
+
+const p29 = Promise.resolve(5);
+
+/* p29 is fulfilled therefore the .then() handles the fulfilled promise, the error thrown by the
+.then() isn't caught by p29.then(onRejection), the new Promise returned to p30 gets rejected so
+either p30.then(onRejection) or p30.catch() will handle that rejection as shown*/
+const p30 = p29.then(
+    (value) => {
+        throw new Error("Boom");
+    },
+    (error) => {
+        console.log("Caught:", error.message);
+    },
+);
+
+const p31 = Promise.resolve(5);
+
+// p32 is the rejected promise returned by p31 and is handled in the next step with p32.catch()
+const p32 = p31.then((value) => {
+    throw new Error("Boom");
+});
+
+const p33 = p32.catch((error) => {
+    console.log("Caught:", error.message);
+});
+
+/*
+The onRejected handler only handles a rejection coming into that .then(); if onFulfilled runs and
+throws an error, that error rejects the new Promise returned by .then() and is not caught by the
+sibling onRejected.
+*/
+
+/*
+-- .finally() --
+
+.finally() is used for code that should run whether the Promise fulfills or rejects.
+*/
+
+const p34 = Promise.resolve(10);
+
+const p35 = p34.finally(() => {
+    console.log("Cleanup");
+});
+
+/*
+p34 → FULFILLED: 10
+        ↓
+     .finally()
+        ↓
+   logs "Cleanup"
+        ↓
+p35 → FULFILLED: 10
+*/
+
+const p36 = Promise.reject(new Error("Failed"));
+
+const p37 = p36.finally(() => {
+    console.log("Cleanup");
+});
+
+/*
+p36 → REJECTED: Error("Failed")
+        ↓
+     .finally()
+        ↓
+   logs "Cleanup"
+        ↓
+p37 → REJECTED: Error("Failed")
+
+Normally, .finally() is not trying to transform the value or recover from an error.
+*/
+
+// Normal use case
+showLoadingSpinner();
+
+fetchData()
+    .then(handleData)
+    .catch(handleError)
+    .finally(() => {
+        hideLoadingSpinner();
+    });
+// Whether the request succeeds or fails the cleanup .finally still happens.
+
+/*
+One important rule about .finally()
+
+.finally() normally preserves the original Promise's state and value/reason. Normal return values
+are ignored, but if the .finally() callback throws or returns a rejected Promise, the new Promise
+becomes rejected with that new error/reason.
+*/
+
+// Example
+const p38 = Promise.resolve(10);
+
+const p39 = p38.finally(() => {
+    return 100;
+});
+
+/*
+Your might expect p39 → fulfilled with 100 based on what we have learned but that's not what
+normally happens instead:
+
+p38 → fulfilled with 10
+        ↓
+.finally()
+        ↓
+return 100
+        ↓
+100 is normally ignored
+        ↓
+p39 → fulfilled with 10
+
+There is an exception to this which is what if .finally() didn't complete successfully and throws
+an Error or returns a Promise
+*/
+
+const p40 = Promise.resolve(25);
+
+const p41 = p40.finally(() => {
+    throw new Error("Cleanup failed");
+});
+/*
+Here the .finally() failed itself. This failure becomes the outcome of the chain
+
+p40 → fulfilled: 25
+        ↓
+.finally()
+        ↓
+throws Error("Cleanup failed")
+        ↓
+original fulfillment is replaced
+        ↓
+p41 → REJECTED: Error("Cleanup failed")
+*/
+
+const p42 = Promise.resolve(25);
+
+const p43 = p42.finally(() => {
+    return Promise.reject(new Error("Cleanup failed"));
+});
+
+/*
+Same goes for a rejected promise
+
+p42 → fulfilled: 25
+        ↓
+.finally()
+        ↓
+returns rejected Promise
+        ↓
+p43 → REJECTED: Error("Cleanup failed")
+*/
+
+const p44 = Promise.resolve(25);
+
+const p45 = p44.finally(() => {
+    return Promise.resolve(100);
+});
+
+/*
+If .finally returns a fulfilled Promise however, it waits for the Promise to fulfill but just like
+before 100 doesn't replace 25. 100 essentially gets discarded in this example and 25 continues
+being the fulfilled value
+
+p58 → fulfilled: 25
+        ↓
+.finally()
+        ↓
+returns Promise fulfilled with 100
+        ↓
+cleanup succeeds
+        ↓
+p59 → fulfilled: 25
+*/
