@@ -1,4 +1,18 @@
 /*
+Time complexity = how the amount of work grows as the input grows.
+- Worst-case — maximum amount of work, usually the default in interviews.
+- Average-case — expected amount of work across typical inputs.
+- Best-case — minimum amount of work.
+- Amortized — average cost of an operation across a sequence of operations, such as dynamic-array
+  push().
+
+Space complexity = memory used overall.
+- Auxiliary space - extra/helper memory used by the algorithm
+- Output space - memory required for the returned answer
+- Total space - both
+*/
+
+/*
 BIG O TIME & SPACE COMPLEXITY — INTERVIEW CHEAT SHEET
 
 

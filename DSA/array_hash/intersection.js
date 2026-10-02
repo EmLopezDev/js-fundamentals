@@ -41,3 +41,30 @@ function intersectionBrute(nums1, nums2) {
     }
     return result;
 }
+
+/*
+Optimized Way
+
+Time complexity = O(n + m) - worst case: creating the set required going through nums2 which is o(m)
+and the for...in loop runs n times which is O(n). Giving us O(n + m)
+
+Space complexity = O(n + m) worst case: cache will grow n time with nums2 depending on its size, and
+results will grow m times depending on the number of matches found. Giving use O(n + m);
+
+If only auxiliary space is being accounted then the Space complexity is O(m)
+*/
+
+function intersectionOptimized(nums1, nums2) {
+    const results = [];
+
+    const cache = new Set(nums2);
+
+    for (const num of nums1) {
+        if (cache.has(num)) {
+            results.push(num);
+            cache.delete(num);
+        }
+    }
+
+    return results;
+}
