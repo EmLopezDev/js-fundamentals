@@ -12,11 +12,14 @@ function greet() {
     console.log("Hello!");
 }
 
-/* var, let, and const are also hoisted. When var is hoisted it is initialized as undefined, let and
+/* var, let, and const are all hoisted. When var is hoisted it is initialized as undefined, let and
 const however are left uninitialized in a state called the temporal dead zone (TDZ) and throw a
 reference error if they are being accessed before being initialized. The reason behind var being
 designed this way was to prevent the environment from completely crashing with fatal memory errors
 if a developer tried to use a variable slightly out of order in Javascript's inception.
+
+TDZ = the period where a let or const binding exists but has not yet been initialized, so accessing
+it throws a ReferenceError.
 
 Unless you are maintaining legacy code, let and const are the preferred ways of declaring a variable
 to catch unintended pre-declaration access early.
@@ -46,3 +49,20 @@ sayBye(); // Uncaught ReferenceError: Cannot access 'sayBye' before initializati
 const sayBye = function () {
     console.log("Bye!");
 };
+
+/*
+One Rule to Memorize
+
+var is function-scoped; let and const are block-scoped. TDZ describes accessing a let/const binding
+before initialization within its scope—not accessing it from outside its scope.
+
+For let/const remember this:
+
+Inside scope but before let/const initialization
+
+- ReferenceError → TDZ → "Cannot access 'x' before initialization"
+
+Outside the variable's scope
+
+- ReferenceError → Not a TDZ issue → "x is not defined"
+*/

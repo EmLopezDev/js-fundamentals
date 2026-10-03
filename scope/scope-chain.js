@@ -68,3 +68,74 @@ function greet() {
 }
 
 greet();
+
+/*
+Variable Shadowing
+
+“Shadowing” doesn't modify or replace the outer variable. It just means that while you're inside the
+inner scope, the inner variable with the same name is the one found first.
+*/
+
+let x = 10;
+
+function outer() {
+    let x = 20;
+
+    if (true) {
+        let x = 30;
+        console.log(x); // prints 30
+    }
+
+    console.log(x); // prints 20
+}
+
+outer();
+
+console.log(x); // prints 10
+
+// Potential Interview question
+// Without running it, tell me what gets logged and why:
+let value = "Global";
+
+function outer() {
+    let value = "Outer";
+
+    return function inner() {
+        console.log(value);
+    };
+}
+
+function run(fn) {
+    let value = "Run";
+    fn();
+}
+
+const myFunction = outer();
+
+run(myFunction); // Answer: "Outer"
+
+/*
+Interview Ready Response:
+
+JavaScript uses lexical scoping, so a function's scope chain is determined by where the function is
+defined, not where it is called. The returned inner function closes over outer's lexical
+environment, so it accesses "Outer" even when invoked inside run.
+*/
+
+// Classic interview trap: var inside a loop with closure
+// What gets logged and why?
+for (var i = 0; i < 3; i++) {
+    setTimeout(function () {
+        console.log(i);
+    }, 100);
+}
+
+/*
+Answer: 3, 3, 3
+
+Interview Ready Answer
+
+var is function-scoped, so the loop does not create a new i binding for each iteration. All three
+callbacks close over the same i. By the time the timer callbacks execute, the loop has completed and
+that shared i has become 3, so all three callbacks log 3.
+*/

@@ -71,6 +71,13 @@ const user = {
 console.log(user.getRole()); // Prints: "Admin"
 
 /*
+One quick callout for Function Expressions if it is stored in a var which gets hoisted and
+initialized as undefined and it is invoked before they are defined you get a TypeError rather than a
+ReferenceError because you are attempting to invoke or call undefined which is not a function. If
+stored in let or const however then you get the ReferenceError.
+*/
+
+/*
 3. Arrow Functions
 
 A lightweight function using a fat arrow "=>" operator. Arrow functions themselves are anonymous
