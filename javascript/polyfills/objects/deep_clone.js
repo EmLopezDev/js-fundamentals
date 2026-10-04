@@ -25,7 +25,7 @@ function deepClone(value) {
 
     return clone;
     /*
-    A better version of this would use:
+    Another version of this would use:
         for (const key of Object.keys(value)) {
             clone[key] = deepClone(value[key]);
         }
