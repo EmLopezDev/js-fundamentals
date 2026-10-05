@@ -121,3 +121,35 @@ Arrow functions (() => {}) bypass all four rules above. They do not have their o
 Instead, they inherit `this` from the parent scope (lexical scope) exactly where they were defined.
 Methods like .call(), .apply(), or .bind() will have no effect on an arrow function's `this`
 */
+
+const john = {
+    name: "John",
+
+    greet: () => {
+        console.log(this.name);
+    },
+};
+
+john.greet();
+
+/*
+An arrow function does not have its own this; it inherits this from the surrounding lexical context.
+An object literal does not create a new this context, so calling an arrow as john.greet() does not
+make this refer to john. A normal method does receive this based on how it is called, so
+john.greet() with a normal method gives this === john.
+*/
+
+const john2 = {
+    name: "John",
+
+    greet() {
+        console.log(this.name);
+    },
+};
+
+john2.greet();
+
+/*
+Rule of thumb: Don't generally use an arrow function as an object method when you need this to refer
+to the object. Use a normal function/method instead.
+*/
