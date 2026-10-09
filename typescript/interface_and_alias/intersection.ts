@@ -47,3 +47,27 @@ type Combined2 = C & D;
 
 // null is excluded because it doesn't satisfy A (assuming strictNullChecks). So Combined["name"] is
 // string
+
+// Conflicting properties
+type ShippingAddress = {
+    street: string;
+    zipCode: string;
+};
+
+type DeliveryZone = {
+    region: string;
+    zipCode: number;
+};
+
+type DeliveryDetails = ShippingAddress & DeliveryZone;
+/*
+{
+    street: string;
+    region: string;
+    zipCode: string & number; // never
+}
+*/
+
+// Both types define zipCode, but one requires a string and the other requires a number. Because of
+// this TypeScript turns the conflicting property to type never, since it can never be of both types
+// at the same time.

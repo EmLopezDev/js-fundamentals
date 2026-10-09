@@ -11,6 +11,7 @@ interface User {
         city: string;
     };
 }
+// User is doing declaration merging combining properties into User
 
 interface Admin extends User {
     permissions: string[];
@@ -52,7 +53,7 @@ Best used for:
 - Declaration merging is useful, such as extending library types.
 */
 
-// interfaces can participate in both a Union(|) or and intersection(&)
+// Interfaces can participate in both a Union(|) or and intersection(&)
 interface Customer {
     id: number;
 }
@@ -66,3 +67,17 @@ type CustomerAndSubscriber = Customer & Subscriber;
 
 // The types being combined can be interfaces or aliases. A type alias names the resulting union or
 // intersection.
+
+// Declaration merging conflicting property types
+interface Developer {
+    name: string;
+    language: string;
+}
+
+interface Developer {
+    experience: number;
+    language: number; // ❌ TypeScript error
+}
+
+// When interfaces merge, non-function properties with the same name must have compatible
+// declarations with the same type.
