@@ -39,7 +39,7 @@ satisfy during static type checking.
 - Readonly properties (readonly): Prevent reassignment through the interface.
 - Methods: Define method signatures, parameters, and return types.
 - Extension (extends): Create interfaces that inherit properties from other interfaces or compatible
-  object types.
+  object types. An interface that extends another must remain compatible with the parent interface.
 - Declaration merging: Multiple declarations with the same interface name can be combined.
 - Structural typing: Objects are checked based on their structure rather than their declared type
   names.
@@ -51,3 +51,18 @@ Best used for:
 - Working with object hierarchies using extends.
 - Declaration merging is useful, such as extending library types.
 */
+
+// interfaces can participate in both a Union(|) or and intersection(&)
+interface Customer {
+    id: number;
+}
+
+interface Subscriber {
+    plan: string;
+}
+
+type CustomerOrSubscriber = Customer | Subscriber;
+type CustomerAndSubscriber = Customer & Subscriber;
+
+// The types being combined can be interfaces or aliases. A type alias names the resulting union or
+// intersection.
