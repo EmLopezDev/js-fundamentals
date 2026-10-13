@@ -37,4 +37,6 @@ Best used for:
 - Combining types using intersections.
 - Defining tuples or function types.
 - Building utility or conditional types.
+
+Note: TypeScript can infer an implicit index signature when their properties are compatible.
 */

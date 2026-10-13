@@ -79,5 +79,10 @@ interface Developer {
     language: number; // ❌ TypeScript error
 }
 
-// When interfaces merge, non-function properties with the same name must have compatible
-// declarations with the same type.
+/* When interfaces merge, non-function properties with the same name must have compatible
+declarations with the same type. */
+
+/*
+Note: TypeScript generally doesn't infer index signatures for interfaces, because interfaces can
+be extended through declaration merging.
+*/
