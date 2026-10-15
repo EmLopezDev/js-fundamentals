@@ -75,3 +75,10 @@ their identity is the same, the state associated with each will be the same one.
 - State preservation: React retains the state associated with the component's identity.
 - Remounting: React creates a new component instance with fresh state when its identity changes.
 */
+
+/*
+Where should state live?
+
+Keep state as local as possible, but move it to a shared ancestor when multiple components need to
+coordinate around the same data.
+*/
