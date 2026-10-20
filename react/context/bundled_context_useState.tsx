@@ -85,5 +85,4 @@ What happens, step by step
 5. The user clicks the button in AddToCartButton. It calls addItem, which calls setCartCount.
 6. CartProvider re-renders with cartCount as 1 and creates a new value. React sees the Provider’s
    value changed, so consumers re-render. CartBadge now shows Cart (1).
-
 */

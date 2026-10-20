@@ -88,8 +88,9 @@ In the example above useCart() is a custom hook that consumes the Context with u
 is a CartContextValue available then useCart will pass along the context, if not useCart() will
 throw an Error. This is a great way to centralize Context access and validate that a Provider
 exists.
+*/
 
-
+/*
 Nested Providers
 
 When there are nested Providers the key take away is that useContext() in the children component

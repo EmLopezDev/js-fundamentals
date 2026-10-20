@@ -39,6 +39,17 @@ type CartContextValue = {
 const CartContext2 = createContext<CartContextValue | null>(null);
 
 /*
-choosing null as the default value is a better option because we can check for null and show a clear
+Choosing null as the default value is a better option because we can check for null and show a clear
 error instead of silently using fake data.
+
+One shortcut to avoid that is sometimes uses is type assertion
+*/
+
+const CartContext3 = createContext({} as CartContextValue);
+
+/*
+The example above silences TypeScript by claiming the default is a full CartContextValue, but it’s
+an empty object. If a component is used outside the Provider, TypeScript will see no Problem and
+crash wll happen at runtime. Choosing null makes the compiler and the hook catch it for you. A type
+assertion is you promising TypeScript something it can’t verify.
 */
