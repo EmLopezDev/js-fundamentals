@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useMemo, useCallback type ReactNode } from "react";
+import { useState, createContext, useContext, useMemo, useCallback, type ReactNode } from "react";
 /*
 useMemo to memoize Context value
 
@@ -47,7 +47,14 @@ contextValue is created this will force all the Context consumers to also re-ren
 
 The fix is using useMemo.
 */
-const contextValue = useMemo(() => ({ /* cartCount, addItem */ }), [/* cartCount, addItem */]);
+const contextValue = useMemo(
+    () => ({
+        /* cartCount, addItem */
+    }),
+    [
+        /* cartCount, addItem */
+    ],
+);
 
 /*
 1. First render: useMemo builds { cartCount, addItem } and caches it.
@@ -59,8 +66,8 @@ For the above example you would wrap the addItem function in a useCallback hook 
 as a new function during each render
 */
 
-useCallback(function addItem(){}, [])
-const addItem = useCallback(() => {}, [])
+useCallback(function addItem() {}, []);
+const addItem = useCallback(() => {}, []);
 
 /*
 Some Rules:
