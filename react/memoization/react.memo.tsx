@@ -18,7 +18,7 @@ const products = [
     { id: 2, name: "" },
 ];
 
-const ProductGrid = memo(function ProductGrid({
+export const ProductGrid = memo(function ProductGrid({
     products,
 }: {
     products: Product[];
